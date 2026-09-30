@@ -42,7 +42,7 @@
   --shadow-lift:0 12px 30px rgba(46,134,209,.22);
   --nav-bg:rgba(226,240,252,.62);
   --radius:18px;
-  --nav-h:58px;
+  --nav-h:46px;
   --hero-img-h:clamp(430px, 64svh, 600px);
 }
 @media (prefers-color-scheme: dark){
@@ -98,17 +98,15 @@ a{color:var(--sea-600)}
 .nav{position:fixed;inset:0 0 auto 0;height:var(--nav-h);z-index:50;display:flex;align-items:center;
   background:var(--nav-bg);backdrop-filter:blur(16px) saturate(1.4);-webkit-backdrop-filter:blur(16px) saturate(1.4);
   border-bottom:1px solid color-mix(in srgb,var(--sky-300) 45%,transparent)}
-.nav .inner{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;padding:0 12px;width:100%;max-width:900px;margin:0 auto;align-items:center}
-.nav .inner::-webkit-scrollbar{display:none}
-.nav a{flex:none;display:inline-flex;align-items:center;gap:6px;text-decoration:none;color:var(--ink-blue);font-weight:500;font-size:14px;padding:7px 12px;border-radius:999px;white-space:nowrap;transition:background .25s,color .25s}
+.nav .inner{display:grid;grid-template-columns:repeat(5,1fr);gap:2px;padding:0 6px;width:100%;max-width:560px;margin:0 auto;align-items:center}
+.nav a{display:flex;align-items:center;justify-content:center;gap:4px;text-decoration:none;color:var(--ink-blue);font-weight:500;font-size:13.5px;padding:6px 2px;border-radius:999px;white-space:nowrap;transition:background .25s,color .25s}
 .nav a .ic{color:var(--sea-500)}
-.nav a.brand{font-family:"Great Vibes",cursive;font-size:26px;padding:2px 8px 0 4px;color:var(--ink-blue)}
 .nav a.active{background:color-mix(in srgb,var(--card-strong) 80%,transparent);box-shadow:0 2px 10px rgba(46,134,209,.14)}
 .nav a.active .ic{color:var(--sea-600)}
 
 /* ---------- hero：滿版插畫 ---------- */
-.hero{position:relative;padding-top:calc(var(--hero-img-h) - 150px);isolation:isolate}
-.hero-media{position:absolute;inset:0 0 auto 0;height:var(--hero-img-h);z-index:-1;overflow:hidden}
+.hero{position:relative;padding-top:calc(var(--nav-h) + var(--hero-img-h) - 150px);isolation:isolate}
+.hero-media{position:absolute;inset:var(--nav-h) 0 auto 0;height:var(--hero-img-h);z-index:-1;overflow:hidden}
 .hero-media img{width:100%;height:100%;object-fit:cover;object-position:50% 12%;display:block;
   -webkit-mask-image:linear-gradient(180deg,#000 0%,#000 48%,rgba(0,0,0,.55) 72%,transparent 100%);
           mask-image:linear-gradient(180deg,#000 0%,#000 48%,rgba(0,0,0,.55) 72%,transparent 100%)}
@@ -195,7 +193,7 @@ section.block{padding:18px 0 8px}
 .bp .plane::before{content:"";position:absolute;left:4px;right:4px;top:50%;border-top:2px dashed var(--sky-300)}
 .bp .plane span{position:relative;background:var(--card-strong);padding:0 6px;display:flex}
 .bp .plane .ic{width:22px;height:22px}
-.bp .meta{display:grid;grid-template-columns:auto auto 1fr;column-gap:14px;gap:6px;margin-top:12px;font-size:12px;color:var(--ink-2);position:relative;z-index:1}
+.bp .meta{display:grid;grid-template-columns:auto 1fr;column-gap:14px;gap:6px;margin-top:12px;font-size:12px;color:var(--ink-2);position:relative;z-index:1}
 .bp .meta b{display:block;font-size:15px;color:var(--ink)}
 .bp .stub{width:76px;flex:none;border-left:2px dashed var(--line);padding:12px 10px;display:flex;flex-direction:column;align-items:center;justify-content:space-between;background:var(--sky-100);position:relative}
 .bp .stub::before,.bp .stub::after{content:"";position:absolute;left:-11px;width:20px;height:20px;border-radius:50%;background:var(--paper)}
@@ -209,9 +207,7 @@ section.block{padding:18px 0 8px}
 .kv{display:grid;grid-template-columns:auto 1fr;gap:6px 12px;margin:12px 0;font-size:14px}
 .kv dt{color:var(--ink-2);white-space:nowrap}
 .kv dd{margin:0;font-weight:500}
-.price{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;background:linear-gradient(120deg,var(--sky-100),color-mix(in srgb,var(--lilac-soft) 70%,var(--sky-100)));border-radius:16px;padding:10px 14px;margin-top:4px}
-.price .total{font-family:"Noto Serif TC",serif;font-size:24px;font-weight:900;color:var(--ink-blue)}
-.price .per{font-weight:700;color:var(--peach-ink)}
+.price{display:flex;flex-wrap:wrap;gap:2px 14px;font-size:12.5px;color:var(--ink-2);padding-top:8px;border-top:1px dashed var(--line)}
 .addr{font-size:13px;color:var(--ink-2);word-break:break-word}
 .copy{border:0;background:none;color:var(--sea-600);font-weight:700;font-size:13px;cursor:pointer;padding:0 4px;font-family:inherit}
 
@@ -250,14 +246,24 @@ section.block{padding:18px 0 8px}
 .food .fn{font-weight:700}
 .food .fd{font-size:13px;color:var(--ink-2)}
 
-/* ---------- transport ---------- */
+/* ---------- transport（在每日行程內） ---------- */
+.day-transport{margin:4px 0 14px;padding-top:14px;border-top:1px dashed var(--line)}
+.dt-head{display:flex;align-items:center;gap:8px;margin:0 0 10px;font-size:15px;color:var(--ink-blue);letter-spacing:.1em}
+.dt-head .ic{color:var(--sea-500);width:18px;height:18px}
+.dt-foot{margin:4px 2px 0;font-size:12px;color:var(--ink-2)}
+.back{margin-top:6px;padding:14px 14px 10px;border-radius:16px;background:color-mix(in srgb,var(--mint-soft) 75%,transparent);border:1px solid color-mix(in srgb,var(--mint) 45%,transparent)}
+.back .dt-head{color:var(--mint-ink)}.back .dt-head .ic{color:var(--mint-ink)}
+.back .oi{background:var(--card-strong)!important;color:var(--mint-ink)!important}
+.back .place{margin-top:10px}
+.day-transport details.tr{background:color-mix(in srgb,var(--sky-100) 72%,transparent);box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none;border:1px solid color-mix(in srgb,var(--sky-200) 60%,transparent)}
+.day-transport details.tr.hl{box-shadow:inset 0 0 0 2px var(--peach)}
 details.tr{background:var(--card);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-radius:var(--radius);border:1px solid var(--card-border);box-shadow:var(--shadow);margin-bottom:10px;overflow:hidden}
 details.tr.hl{box-shadow:var(--shadow),inset 0 0 0 2px var(--peach)}
 details.tr summary{list-style:none;cursor:pointer;padding:14px 16px;font-weight:700;font-size:16px;display:flex;align-items:center;gap:10px;color:var(--navy)}
 details.tr summary::-webkit-details-marker{display:none}
 details.tr summary::after{content:"";margin-left:auto;width:9px;height:9px;border-right:2px solid var(--sea-500);border-bottom:2px solid var(--sea-500);transform:rotate(45deg);transition:transform .2s;flex:none}
 details.tr[open] summary::after{transform:rotate(-135deg)}
-details.tr summary .when{font-size:12px;color:var(--ink-2);font-weight:500}
+details.tr summary .when{font-size:12px;color:var(--ink-2);font-weight:500;white-space:nowrap}
 details.tr .body{padding:0 16px 14px;font-size:15px}
 .opt{display:flex;gap:12px;align-items:flex-start;padding:9px 0;border-top:1px dashed var(--line)}
 .opt:first-child{border-top:0}
@@ -303,7 +309,7 @@ footer .kr{display:block;margin-bottom:10px}
 
 @media (min-width:760px){
   :root{--hero-img-h:min(86vh,760px)}
-  .hero{padding-top:calc(var(--hero-img-h) - 230px)}
+  .hero{padding-top:calc(var(--nav-h) + var(--hero-img-h) - 230px)}
 }
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.mbtn,.btn,.tab{transition:none}}
 </style>
@@ -345,6 +351,7 @@ footer .kr{display:block;margin-bottom:10px}
   <symbol id="i-chat" viewBox="0 0 24 24"><path d="M4 5.5h16v10H10l-4 3.5v-3.5H4z"/><path d="M8.5 10.5h7"/></symbol>
   <symbol id="i-note" viewBox="0 0 24 24"><rect x="5" y="3.5" width="14" height="17" rx="3"/><path d="M8.5 8.5h7M8.5 12h7M8.5 15.5h4"/></symbol>
   <symbol id="i-phone" viewBox="0 0 24 24"><rect x="7" y="2.5" width="10" height="19" rx="3"/><path d="M11 18.5h2"/></symbol>
+  <symbol id="i-walk" viewBox="0 0 24 24"><circle cx="13" cy="4.5" r="1.8"/><path d="M10 21l2.2-6.5L15 17v4M9 11l3-3.5 3 3.5 3 1M12.2 14.5l.8-6.5M9 11l-1.5 3"/></symbol>
   <symbol id="i-home" viewBox="0 0 24 24"><path d="M4 11 12 4l8 7M6 9.5V20h12V9.5"/></symbol>
   <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="3"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></symbol>
   <symbol id="i-gull" viewBox="0 0 80 36"><path d="M6 20c6-6 12-6 16 0 4-7 11-8 17-3M46 10c4-4 8-4 11 0 3-4 7-5 11-2M58 28c3-3 5-3 7 0 2-3 5-3 7-1"/></symbol>
@@ -353,12 +360,10 @@ footer .kr{display:block;margin-bottom:10px}
 
 <nav class="nav" aria-label="區塊導覽">
   <div class="inner" id="nav">
-    <a class="brand" href="#top">Busan</a>
     <a href="#flights"><svg class="ic"><use href="#i-plane"/></svg>機票</a>
     <a href="#stays"><svg class="ic"><use href="#i-bed"/></svg>住宿</a>
     <a href="#days"><svg class="ic"><use href="#i-cal"/></svg>行程</a>
     <a href="#food"><svg class="ic"><use href="#i-bowl"/></svg>美食</a>
-    <a href="#transport"><svg class="ic"><use href="#i-subway"/></svg>交通</a>
     <a href="#todo"><svg class="ic"><use href="#i-check"/></svg>待辦</a>
   </div>
 </nav>
@@ -394,6 +399,8 @@ footer .kr{display:block;margin-bottom:10px}
     <div class="sec-head"><span class="script">Itinerary</span><h2><svg class="ic"><use href="#i-cal"/></svg>每日行程<span class="kr">일정</span></h2><svg class="wave"><use href="#i-wave"/></svg><svg class="gull"><use href="#i-gull"/></svg></div>
     <div class="tabs" role="tablist" id="day-tabs"></div>
     <div class="card" id="day-panel" role="tabpanel"></div>
+    <h3 class="subhead"><svg class="ic"><use href="#i-phone"/></svg>實用 App 與小提醒</h3>
+    <div class="tips" id="tips"></div>
   </section>
 <svg class="divider" viewBox="0 0 520 34" aria-hidden="true"><path d="M4 22c18 0 22-12 40-12s22 12 40 12 22-12 40-12 22 12 40 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M200 20c4-10 16-12 22-6 4-8 18-9 24 0 8-6 20-2 20 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle class="d1" cx="252" cy="28" r="2.6"/><circle class="d2" cx="262" cy="28" r="2.6"/><circle class="d3" cx="272" cy="28" r="2.6"/><path d="M314 22c18 0 22-12 40-12s22 12 40 12 22-12 40-12 22 12 40 12 22-12 40-12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
   <section class="block" id="food">
@@ -403,14 +410,6 @@ footer .kr{display:block;margin-bottom:10px}
       <span class="tag sup">推薦補充</span>＝依區域補充，非原資料，出發前請再確認營業時間
     </p>
     <div class="grid two" id="food-list"></div>
-  </section>
-<svg class="divider" viewBox="0 0 520 34" aria-hidden="true"><path d="M4 22c18 0 22-12 40-12s22 12 40 12 22-12 40-12 22 12 40 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M200 20c4-10 16-12 22-6 4-8 18-9 24 0 8-6 20-2 20 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle class="d1" cx="252" cy="28" r="2.6"/><circle class="d2" cx="262" cy="28" r="2.6"/><circle class="d3" cx="272" cy="28" r="2.6"/><path d="M314 22c18 0 22-12 40-12s22 12 40 12 22-12 40-12 22 12 40 12 22-12 40-12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
-  <section class="block" id="transport">
-    <div class="sec-head"><span class="script">Getting Around</span><h2><svg class="ic"><use href="#i-subway"/></svg>交通建議<span class="kr">교통</span></h2><svg class="wave"><use href="#i-wave"/></svg><svg class="gull"><use href="#i-gull"/></svg></div>
-    <p class="muted" style="margin-top:-6px">時間與車資皆為大約值，實際以 Naver Map / Kakao T 當下查詢為準。</p>
-    <div id="transport-list"></div>
-    <h3 class="subhead"><svg class="ic"><use href="#i-phone"/></svg>實用 App 與小提醒</h3>
-    <div class="tips" id="tips"></div>
   </section>
 <svg class="divider" viewBox="0 0 520 34" aria-hidden="true"><path d="M4 22c18 0 22-12 40-12s22 12 40 12 22-12 40-12 22 12 40 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M200 20c4-10 16-12 22-6 4-8 18-9 24 0 8-6 20-2 20 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle class="d1" cx="252" cy="28" r="2.6"/><circle class="d2" cx="262" cy="28" r="2.6"/><circle class="d3" cx="272" cy="28" r="2.6"/><path d="M314 22c18 0 22-12 40-12s22 12 40 12 22-12 40-12 22 12 40 12 22-12 40-12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
   <section class="block" id="todo">
@@ -440,6 +439,7 @@ footer .kr{display:block;margin-bottom:10px}
  *  - place 格式：{ name: "顯示名稱", ko: "韓文名(給 Naver 搜尋用，可省略)", g: "Google Maps 連結(可省略，省略就用名稱搜尋)" }
  *  - tags 可用：pass(釜山Pass) ok(已完成) warn(待辦) info(資訊) tbd(待確認) sup(推薦補充)
  *  - 沒資料的欄位請填 TBD，畫面會顯示「待確認」
+ *  - days[].back：每天最後一個行程結束後回住宿的方式（dest 是導航目的地）
  * ===================================================================== */
 const TBD = null;
 const TRIP = {
@@ -457,11 +457,9 @@ const TRIP = {
 
   flights: [
     { dir: "去程 DEP", airline: "華航", no: "CI109", date: "11/15（日）",
-      from: { code: "TPE", city: "台北桃園" }, to: { code: "PUS", city: "釜山金海" }, dep: "06:00", arr: "09:10",
-      pax: "語心・筱婕・柔臻" },
+      from: { code: "TPE", city: "台北桃園" }, to: { code: "PUS", city: "釜山金海" }, dep: "06:00", arr: "09:10" },
     { dir: "回程 RET", airline: "華航", no: "CI187", date: "11/19（四）",
-      from: { code: "PUS", city: "釜山金海" }, to: { code: "TPE", city: "台北桃園" }, dep: "19:50", arr: "21:30",
-      pax: "4 人（含諸葛）" },
+      from: { code: "PUS", city: "釜山金海" }, to: { code: "TPE", city: "台北桃園" }, dep: "19:50", arr: "21:30" },
   ],
 
   stays: [
@@ -472,21 +470,27 @@ const TRIP = {
       g: null,
       checkin: "15:00", checkout: "11:00",
       luggage: "需提前聯絡房東，3 樓櫃檯協助寄存（營業 9:00–16:00）",
-      total: 8332, perNight: 1388, perNote: "3 人分攤（語心、筱婕、柔臻）",
+      total: 8332, perNight: 1388, guests: "語心、筱婕、柔臻",
       book: "https://www.airbnb.com.tw/rooms/1075031107304858817?check_in=2026-11-15&check_out=2026-11-17" },
     { when: "11/17 – 11/19・兩晚", area: "南浦站", name: "Paramion Hotel",
       desc: "南浦站附近，走路就到 BIFF 廣場",
       address: "20 BIFF gwangjang-ro, Jung-gu, Busan",
       ko: "파라미온 호텔 부산",
       g: "https://maps.app.goo.gl/HHX4J6hrRnWaAnss6",
-      checkin: TBD, checkout: TBD,
+      checkin: "15:00", checkout: "11:00",
       luggage: "前台可以寄放行李",
-      total: 11131, perNight: 1392, perNote: "4 人分攤",
+      amenities: "有洗髮精、沐浴乳；不提供牙刷（需自備）",
+      cleaning: "13:00–17:00",
+      total: 11131, perNight: 1392, guests: "語心、筱婕、柔臻、諸葛",
       book: "https://www.booking.com/hotel/kr/paramion.zh-tw.html?checkin=2026-11-17&checkout=2026-11-19&group_adults=4&no_rooms=1" },
   ],
 
   days: [
     { date: "11/15", dow: "日", iso: "2026-11-15", title: "抵達釜山・廣安里", ko: "광안리", stay: "廣安里 Kerencia",
+      back: { title: "回住宿：廣安里 Kerencia", dest: { q: "22 Namcheonbada-ro 33beon-gil, Suyeong-gu, Busan", ko: "부산 수영구 남천바다로33번길 22" }, routes: [
+        { ic: "🚶", h: "彥陽家燒肉 → 住宿：走路約 10 分鐘", p: "兩邊都在廣安里海灘旁，距離約 700 公尺。" },
+        { ic: "🚇", h: "Puradak 炸雞 → 住宿：地鐵約 25 分鐘", p: "Puradak 在海雲台（離住宿約 5 公里）。海雲台站搭 2 號線往「양산 梁山」方向 → 金蓮山站（7 站，約 15 分鐘），出站走路約 8 分鐘。" },
+        { ic: "🚕", h: "或計程車：約 15 分鐘", p: "從海雲台走廣安大橋或水營路回廣安里。" } ] },
       slots: [
         { slot: "早上", icon: "🌅", items: [
           { time: "06:00", what: "華航 CI109 起飛 → 09:10 抵達金海機場" },
@@ -506,12 +510,15 @@ const TRIP = {
         ]},
       ]},
     { date: "11/16", dow: "一", iso: "2026-11-16", title: "海雲台一日", ko: "해운대", stay: "廣安里 Kerencia",
+      back: { title: "回住宿：廣安里 Kerencia", dest: { q: "22 Namcheonbada-ro 33beon-gil, Suyeong-gu, Busan", ko: "부산 수영구 남천바다로33번길 22" }, routes: [
+        { ic: "🚇", h: "SPA LAND → 住宿：地鐵約 20 分鐘", p: "新世界百貨地下直通 Centum City 站，搭 2 號線往「양산 梁山」方向 → 金蓮山站（4 站，約 8 分鐘），出站走路約 8 分鐘。" },
+        { ic: "🚕", h: "或計程車：約 10 分鐘", p: "距離約 3 公里，汗蒸完累了最方便。" } ],
+        note: "汗蒸幕待到很晚的話，出發前用 Naver Map 確認地鐵末班車時間，錯過就搭計程車。" },
       slots: [
         { slot: "早上", icon: "🌅", items: [
           { what: "海雲台傳統市場", places: [{ name: "海雲台傳統市場", ko: "해운대시장" }] },
-          { what: "午餐：31 公分海鮮刀削麵", note: "兩家都可以，看當時離哪間比較近就吃哪間", places: [
-            { name: "海雲台店", ko: "해운대31cm해물칼국수", g: "https://maps.app.goo.gl/jrf7xkHjv9BPfgoa8" },
-            { name: "松亭本店", ko: "해운대31cm해물칼국수 송정본점", g: "https://maps.app.goo.gl/rwhHRw7yg3bwjef48" } ] },
+          { what: "午餐：31 公分海鮮刀削麵", places: [
+            { name: "海雲台店", ko: "해운대31cm해물칼국수", g: "https://maps.app.goo.gl/jrf7xkHjv9BPfgoa8" } ] },
           { what: "海雲台海灘、海理團路（選物店）", places: [
             { name: "海雲台海水浴場", ko: "해운대해수욕장" }, { name: "海理團路", ko: "해리단길" } ] },
         ]},
@@ -526,6 +533,10 @@ const TRIP = {
         ]},
       ]},
     { date: "11/17", dow: "二", iso: "2026-11-17", title: "松島・搬到南浦洞", ko: "송도", stay: "南浦 Paramion Hotel",
+      back: { title: "回住宿：南浦 Paramion Hotel", dest: { q: "20 BIFF gwangjang-ro, Jung-gu, Busan", ko: "파라미온 호텔 부산" }, routes: [
+        { ic: "🚶", h: "南浦雪濃湯 → 飯店：走路約 7 分鐘", p: "約 500 公尺，就在 BIFF 廣場附近。" },
+        { ic: "🚶", h: "Namsun 炸雞 → 飯店：走路約 15 分鐘", p: "約 1 公里；累了可搭計程車，約 5 分鐘。" } ],
+        note: "BHC 炸雞分店還沒決定，選好再用地圖查回飯店的路。" },
       slots: [
         { slot: "早上", icon: "🌅", items: [
           { time: "11:00", what: "廣安里退房，搬去南浦洞", note: "Paramion 前台可寄放行李，交通方式見「交通建議」" },
@@ -549,6 +560,9 @@ const TRIP = {
         ]},
       ]},
     { date: "11/18", dow: "三", iso: "2026-11-18", title: "甘川洞・南浦洞", ko: "감천", stay: "南浦 Paramion Hotel",
+      back: { title: "回住宿：南浦 Paramion Hotel", dest: { q: "20 BIFF gwangjang-ro, Jung-gu, Busan", ko: "파라미온 호텔 부산" }, routes: [
+        { ic: "🚶", h: "南浦排骨烤肉 → 飯店：走路約 8 分鐘", p: "約 600 公尺。" },
+        { ic: "🚶", h: "豚笑 南浦店 → 飯店：走路約 9 分鐘", p: "約 700 公尺。" } ] },
       slots: [
         { slot: "早上", icon: "🌅", items: [
           { time: "11:00", what: "甘川洞租韓服拍照", tags: [["ok","已預約"],["pass","釜山 Pass"]],
@@ -567,9 +581,13 @@ const TRIP = {
         ]},
       ]},
     { date: "11/19", dow: "四", iso: "2026-11-19", title: "影島・回台灣", ko: "영도", stay: null,
+      back: { title: "回飯店拿行李：南浦 Paramion Hotel", dest: { q: "20 BIFF gwangjang-ro, Jung-gu, Busan", ko: "파라미온 호텔 부산" }, routes: [
+        { ic: "🚕", h: "足浴咖啡廳 → 飯店：計程車約 10–15 分鐘", p: "約 3–4 公里，過影島大橋回南浦。" },
+        { ic: "🚕", h: "影島海女村 → 飯店：計程車約 20 分鐘", p: "約 6 公里，傍晚可能塞車，建議 16:00 前出發。" } ],
+        note: "拿完行李，16:45 從飯店出發去機場（見上方「最後一天回機場」）。" },
       slots: [
         { slot: "早上", icon: "🌅", items: [
-          { what: "收拾行李、退房", tags: [["tbd","退房時間待確認"]], note: "Paramion 前台可寄放行李" },
+          { time: "11:00", what: "收拾行李、退房", note: "Paramion 前台可寄放行李" },
           { what: "早午餐：Cuv Share", places: [{ name: "Cuv Share", ko: "커브쉐어", g: "https://maps.app.goo.gl/xhKHLr2JoMR31oSr5" }] },
         ]},
         { slot: "下午", icon: "☀️", items: [
@@ -589,15 +607,17 @@ const TRIP = {
     { area: "廣安里", ko: "광안리", items: [
       { src: "sheet", name: "Mipojip 廣安里店（醬蟹）", ko: "미포집 광안리점", g: "https://maps.app.goo.gl/h6nMf9NmqkVkNMPD7", d: "11/15 午餐" },
       { src: "sheet", name: "彥陽家燒肉", ko: "언양불고기 부산집", g: "https://maps.app.goo.gl/dBArpN7bBJQk9Erg9", d: "11/15 晚餐" },
-      { src: "sheet", name: "Puradak 炸雞", ko: "푸라닭", g: "https://maps.app.goo.gl/aRNyesJA3WJWwZm68", d: "11/15 晚餐" },
-      { src: "sheet", name: "水邊最高豬肉湯飯", ko: "수변최고돼지국밥", g: "https://maps.app.goo.gl/n2PYBy6Qp1gm98E87", d: "11/16 晚餐・釜山代表性豬肉湯飯" },
       { src: "sup", name: "民樂水產市場（生魚片）", ko: "민락회센터", d: "廣安里海邊，買好海鮮上樓代煮／切生魚片" },
+      { src: "sup", name: "Working Holiday 廣安店（早午餐咖啡）", ko: "워킹홀리데이 광안", d: "廣安里海灘正前方 3 樓，看得到廣安大橋；招牌是冰淇淋拿鐵" },
     ]},
     { area: "海雲台", ko: "해운대", items: [
-      { src: "sheet", name: "31cm 海鮮刀削麵 海雲台店", ko: "해운대31cm해물칼국수", g: "https://maps.app.goo.gl/jrf7xkHjv9BPfgoa8", d: "11/16 午餐（二擇一）" },
-      { src: "sheet", name: "31cm 海鮮刀削麵 松亭本店", ko: "해운대31cm해물칼국수 송정본점", g: "https://maps.app.goo.gl/rwhHRw7yg3bwjef48", d: "11/16 午餐（二擇一）" },
+      { src: "sheet", name: "31cm 海鮮刀削麵 海雲台店", ko: "해운대31cm해물칼국수", g: "https://maps.app.goo.gl/jrf7xkHjv9BPfgoa8", d: "11/16 午餐" },
+      { src: "sheet", name: "Puradak 炸雞", ko: "푸라닭", g: "https://maps.app.goo.gl/aRNyesJA3WJWwZm68", d: "11/15 晚餐" },
+      { src: "sheet", name: "水邊最高豬肉湯飯", ko: "수변최고돼지국밥", g: "https://maps.app.goo.gl/n2PYBy6Qp1gm98E87", d: "11/16 晚餐・釜山代表性豬肉湯飯" },
       { src: "sup", name: "錦繡河豚湯 海雲台本店", ko: "금수복국 해운대본점", d: "清爽河豚湯，適合當早餐" },
       { src: "sup", name: "海雲台元祖奶奶湯飯", ko: "해운대 원조할매국밥", d: "海雲台市場附近的牛肉湯飯老店" },
+      { src: "sup", name: "名品海雲台蔘雞湯", ko: "명품해운대삼계탕", g: "https://maps.app.goo.gl/C2fri2oGV15xGoZg6", d: "暖呼呼的蔘雞湯，11 月天涼很適合" },
+      { src: "sup", name: "自然島鹽麵包", ko: "자연도소금빵 해운대", d: "迎月路上的鹽麵包名店，離天空膠囊列車尾浦站不遠" },
     ]},
     { area: "松島", ko: "송도", items: [
       { src: "sheet", name: "송도해솥（海鮮定食）", ko: "송도해솥", g: "https://maps.app.goo.gl/X4zWvuD2wRvzjKUd8", d: "11/17 午餐" },
@@ -606,6 +626,8 @@ const TRIP = {
     ]},
     { area: "甘川洞", ko: "감천", items: [
       { src: "sheet", name: "甘川洞文化村沿路小吃", ko: "감천문화마을", d: "11/18 下午邊走邊吃" },
+      { src: "sup", name: "Blue House on The Stairs（屋頂咖啡）", ko: "계단위푸른집", d: "甘川洞文化村裡的屋頂咖啡廳，招牌是棉花糖雲朵拿鐵；約 10:00–18:00" },
+      { src: "sup", name: "Coffee It House（屋頂咖啡）", ko: "커피잇집", d: "村口的粉紅色建築，屋頂可看整片彩色房子，招牌草莓拿鐵；約 9:30–18:30" },
       { src: "sup", name: "富平罐頭夜市", ko: "부평깡통시장", d: "甘川洞回南浦順路，傍晚後有夜市攤（營業時間出發前確認）" },
     ]},
     { area: "南浦洞", ko: "남포", items: [
@@ -615,7 +637,6 @@ const TRIP = {
       { src: "sheet", name: "南浦排骨烤肉", ko: "남포돈갈비", g: "https://maps.app.goo.gl/ybpW9YbX7YhHiCwF9", d: "11/18 晚餐" },
       { src: "sheet", name: "豚笑 南浦店（豬排）", ko: "톤쇼우 남포점", g: "https://maps.app.goo.gl/f5mySCZk8qivPvDh7", d: "11/18 晚餐" },
       { src: "sheet", name: "Cuv Share（早午餐）", ko: "커브쉐어", g: "https://maps.app.goo.gl/xhKHLr2JoMR31oSr5", d: "11/19 早午餐" },
-      { src: "sup", name: "札嘎其市場", ko: "자갈치시장", d: "釜山最大海鮮市場，就在南浦站旁" },
       { src: "sup", name: "BIFF 廣場 種子糖餅", ko: "씨앗호떡", d: "BIFF 廣場排隊街頭小吃" },
       { src: "sup", name: "18 號完堂（餛飩麵）", ko: "18번완당", d: "南浦洞老字號餛飩" },
     ]},
@@ -626,6 +647,7 @@ const TRIP = {
     ]},
   ],
 
+  // 交通：依 when 開頭的日期（例如 "11/15"）自動放進當天行程下方
   transport: [
     { t: "金海機場 → 廣安里", when: "11/15 早上", opts: [
       { ic: "🚕", h: "計程車（推薦）", p: "約 35–45 分鐘，3 人＋行李最省事。用 Kakao T 叫車或到機場計程車排班處。" },
@@ -634,7 +656,7 @@ const TRIP = {
     { t: "廣安里 → 海雲台", when: "11/16", opts: [
       { ic: "🚇", h: "地鐵 2 號線", p: "廣安站 / 金蓮山站 → 海雲台站，約 15–20 分鐘。" },
       { ic: "🚕", h: "計程車", p: "約 15–20 分鐘，走廣安大橋。" },
-      { ic: "🚃", h: "天空膠囊列車", p: "在尾浦站（海雲台海灘東側）搭乘，終點青沙浦；松亭本店刀削麵在同一條海岸線上。" },
+      { ic: "🚃", h: "天空膠囊列車", p: "在尾浦站（海雲台海灘東側）搭乘，終點青沙浦。" },
       { ic: "♨️", h: "晚上到 SPA LAND", p: "新世界 Centum City 在 2 號線 Centum City 站，汗蒸完回廣安里只有幾站。" },
     ]},
     { t: "搬到南浦洞＋松島", when: "11/17 早上", opts: [
@@ -697,7 +719,7 @@ const nt = n => "NT$" + n.toLocaleString("en-US");
 const icon = id => `<svg class="ic" aria-hidden="true"><use href="#i-${id}"/></svg>`;
 // 資料裡的 emoji → 線條圖示（資料不用改）
 const EMOJI_ICON = { "🌅":"sunrise","☀️":"sun","🌙":"moon","🚕":"car","🚇":"subway","🚃":"tram","♨️":"spa","🧳":"bag","🚠":"cable",
-  "🚌":"bus","⏰":"clock","💳":"card","🗺️":"map","🎫":"ticket","📶":"wifi","🧾":"receipt","🧥":"cloud","🗣️":"chat" };
+  "🚌":"bus","⏰":"clock","💳":"card","🗺️":"map","🎫":"ticket","📶":"wifi","🧾":"receipt","🧥":"cloud","🗣️":"chat","🚶":"walk" };
 const splitEmoji = s => { const m = String(s).match(/^(\S+)\s+(.*)$/); return m && EMOJI_ICON[m[1]] ? [EMOJI_ICON[m[1]], m[2]] : ["bulb", s]; };
 const tagHTML = t => `<span class="tag ${t[0]}">${t[0]==="pass" ? icon("ticket") : t[0]==="ok" ? icon("check") : ""}${esc(t[1])}</span>`;
 const mapBtns = p => `<a class="mbtn g" href="${esc(gUrl(p))}" ${ext}>${icon("pin")}Google</a><a class="mbtn n" href="${esc(nUrl(p))}" ${ext}>${icon("map")}Naver</a>`;
@@ -741,7 +763,6 @@ function renderFlights(){
         <div class="meta">
           <div>日期<b>${esc(f.date)}</b></div>
           <div>航空<b>${esc(f.airline)}</b></div>
-          <div>旅客<b>${orTBD(f.pax)}</b></div>
         </div>
       </div>
       <div class="stub"><span class="fno">${esc(f.no)}</span><div class="barcode"></div></div>
@@ -759,9 +780,12 @@ function renderStays(){
         <dt>入住</dt><dd>${orTBD(s.checkin)}</dd>
         <dt>退房</dt><dd>${orTBD(s.checkout)}</dd>
         <dt>行李</dt><dd>${orTBD(s.luggage)}</dd>
+        ${s.amenities ? `<dt>備品</dt><dd>${esc(s.amenities)}</dd>` : ""}
+        ${s.cleaning ? `<dt>房間清潔</dt><dd>${esc(s.cleaning)}</dd>` : ""}
+        <dt>住客</dt><dd>${esc(s.guests)}</dd>
         <dt>地址</dt><dd class="addr">${esc(s.address)} <button class="copy" data-copy="${esc(s.address)}">複製</button></dd>
       </dl>
-      <div class="price"><span class="total">${nt(s.total)}</span><span class="per">${nt(s.perNight)} / 晚 / 人</span><span class="muted">${esc(s.perNote)}</span></div>
+      <div class="price"><span>總金額 ${nt(s.total)}</span><span>每晚每人 ${nt(s.perNight)}</span></div>
       <div class="btnrow">
         <a class="btn primary" href="${esc(gUrl({ g: s.g, q: s.address }))}" ${ext}>${icon("pin")}在 Google Maps 開啟</a>
         <a class="btn naver" href="${esc(nUrl(s))}" ${ext}>${icon("map")}Naver Map</a>
@@ -792,7 +816,8 @@ function renderDays(){
           </div>`).join("")}
         </li>`).join("")}
       </ol>
-      <div class="stayline">${icon(d.stay ? "bed" : "home")}今晚住宿：${d.stay ? esc(d.stay) : "回台灣，晚安"}</div>`;
+      ${dayTransport(d)}
+      ${backHTML(d)}`;
   };
   $("#day-tabs").addEventListener("click", e => { const b = e.target.closest(".tab"); if (b) show(+b.dataset.i); });
   show(active);
@@ -810,15 +835,37 @@ function renderFood(){
     </div>`).join("");
 }
 
-function renderTransport(){
-  $("#transport-list").innerHTML = TRIP.transport.map((t,i) => `
+function backHTML(d){
+  const b = d.back;
+  if (!b) return `<div class="stayline">${icon(d.stay ? "bed" : "home")}今晚住宿：${d.stay ? esc(d.stay) : "回台灣，晚安"}</div>`;
+  const dir = "https://www.google.com/maps/dir/?api=1&destination=" + encodeURIComponent(b.dest.q);
+  return `<div class="back">
+    <h4 class="dt-head">${icon("home")}${esc(b.title)}</h4>
+    ${b.routes.map(o => `<div class="opt"><span class="oi">${icon(EMOJI_ICON[o.ic] || "map")}</span><div><b>${esc(o.h)}</b><br>${esc(o.p)}</div></div>`).join("")}
+    ${b.note ? `<div class="note muted">${icon("bulb")}<span>${esc(b.note)}</span></div>` : ""}
+    <div class="place"><a class="mbtn g" href="${esc(dir)}" ${ext}>${icon("pin")}Google 導航回住宿</a><a class="mbtn n" href="${esc(nUrl(b.dest))}" ${ext}>${icon("map")}Naver</a></div>
+    <p class="dt-foot">步行時間依直線距離估算，實際以地圖為準。</p>
+  </div>`;
+}
+
+function dayTransport(d){
+  const list = TRIP.transport.filter(t => t.when.startsWith(d.date));
+  if (!list.length) return "";
+  return `<div class="day-transport">
+    <h4 class="dt-head">${icon("subway")}今日交通</h4>
+    ${list.map((t,i) => `
     <details class="tr ${t.hl ? "hl" : ""}" ${t.hl || i===0 ? "open" : ""}>
-      <summary>${esc(t.t)} <span class="when">${esc(t.when)}</span></summary>
+      <summary>${esc(t.t)} <span class="when">${esc(t.when.replace(d.date, "").trim())}</span></summary>
       <div class="body">
         ${t.opts.map(o => `<div class="opt"><span class="oi">${icon(EMOJI_ICON[o.ic] || "map")}</span><div><b>${esc(o.h)}</b><br>${esc(o.p)}</div></div>`).join("")}
         ${t.note ? `<div class="note muted">${icon("bulb")}<span>${esc(t.note)}</span></div>` : ""}
       </div>
-    </details>`).join("");
+    </details>`).join("")}
+    <p class="dt-foot">時間與車資皆為大約值，實際以 Naver Map / Kakao T 當下查詢為準。</p>
+  </div>`;
+}
+
+function renderTips(){
   $("#tips").innerHTML = TRIP.tips.map(t => { const [ic, h] = splitEmoji(t.h);
     return `<div class="tip"><span class="oi">${icon(ic)}</span><div><b>${esc(h)}</b><p>${esc(t.p)}</p></div></div>`; }).join("");
 }
@@ -850,7 +897,7 @@ function initNav(){
   const io = new IntersectionObserver(es => es.forEach(e => {
     if (!e.isIntersecting) return;
     links.forEach(a => a.classList.remove("active"));
-    const a = map.get(e.target.id); if (a && !a.classList.contains("brand")) { a.classList.add("active"); a.scrollIntoView({ inline: "center", block: "nearest" }); }
+    const a = map.get(e.target.id); if (a && !a.classList.contains("brand")) { a.classList.add("active"); }
   }), { rootMargin: "-45% 0px -50% 0px" });
   document.querySelectorAll("section.block").forEach(s => io.observe(s));
   document.addEventListener("click", async e => {
@@ -859,7 +906,7 @@ function initNav(){
   });
 }
 
-renderHero(); renderFlights(); renderStays(); renderDays(); renderFood(); renderTransport(); renderTodo(); initNav();
+renderHero(); renderFlights(); renderStays(); renderDays(); renderFood(); renderTips(); renderTodo(); initNav();
 setInterval(renderHero, 60 * 60 * 1000);
 </script>
 </body>
