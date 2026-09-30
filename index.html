@@ -261,9 +261,14 @@ section.block{padding:18px 0 8px}
 .tr-title{font-weight:700;color:var(--navy);display:flex;align-items:center;gap:8px;margin-bottom:2px}
 .tr-title .when{font-size:12px;color:var(--ink-2);font-weight:500;white-space:nowrap}
 .day-transport .dt-foot{margin:0 14px 12px}
-.back .dt-head{margin-bottom:8px}
 .dt-foot{margin:4px 2px 0;font-size:12px;color:var(--ink-2)}
-.back{margin-top:6px;padding:14px 14px 10px;border-radius:16px;background:color-mix(in srgb,var(--mint-soft) 75%,transparent);border:1px solid color-mix(in srgb,var(--mint) 45%,transparent)}
+.back{margin-top:6px;border-radius:16px;background:color-mix(in srgb,var(--mint-soft) 75%,transparent);border:1px solid color-mix(in srgb,var(--mint) 45%,transparent)}
+.back > summary{list-style:none;cursor:pointer;padding:12px 14px;display:flex;flex-wrap:wrap;align-items:center;gap:2px 10px;position:relative;padding-right:36px}
+.back > summary::-webkit-details-marker{display:none}
+.back > summary::after{content:"";position:absolute;right:16px;top:18px;width:8px;height:8px;border-right:2px solid var(--mint-ink);border-bottom:2px solid var(--mint-ink);transform:rotate(45deg);transition:transform .2s}
+.back[open] > summary::after{transform:rotate(-135deg);top:22px}
+.back[open] .dt-routes{display:none}
+.back-body{padding:0 14px 10px}
 .back .dt-head{color:var(--mint-ink)}.back .dt-head .ic{color:var(--mint-ink)}
 .back .oi{background:var(--card-strong)!important;color:var(--mint-ink)!important}
 .back .place{margin-top:10px}
@@ -308,6 +313,15 @@ details.tr .body{padding:0 16px 14px;font-size:15px}
 .todo .t small{display:flex;align-items:center;gap:4px;flex-wrap:wrap;color:var(--ink-2);font-size:12px}
 .todo .t small .ic{width:12px;height:12px;color:var(--sky-400)}
 .todo li.done .t>span{text-decoration:line-through;color:var(--ink-2)}
+.todo li.pending{opacity:.55}
+.todo-add{display:grid;gap:8px;margin-top:12px;padding-top:12px;border-top:1px dashed var(--line)}
+.todo-add .row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.todo-add input{width:100%;min-height:42px;padding:8px 12px;border-radius:12px;border:1.5px solid var(--line);background:var(--card-strong);color:var(--ink);font:inherit;font-size:16px}
+.todo-add input:focus{outline:none;border-color:var(--sky-400);box-shadow:0 0 0 3px color-mix(in srgb,var(--sky-300) 35%,transparent)}
+.todo-add .btn{justify-self:start}
+.todo-add .btn[disabled]{opacity:.6;pointer-events:none}
+.todo-foot{display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px;margin-top:10px;font-size:12.5px;color:var(--ink-2)}
+.todo-foot button{border:0;background:none;padding:0;font:inherit;color:var(--sea-600);font-weight:700;cursor:pointer}
 .pass-spots{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
 .pass-spots span{background:var(--peach-soft);color:var(--peach-ink);font-weight:700;border-radius:999px;padding:6px 14px;font-size:14px}
 .pass-spots span:nth-child(3n+2){background:var(--mint-soft);color:var(--mint-ink)}
@@ -429,8 +443,17 @@ footer .kr{display:block;margin-bottom:10px}
     <div class="grid two">
       <div class="card">
         <h3 class="ch"><svg class="ic"><use href="#i-note"/></svg>待辦事項</h3>
-        <p class="muted" style="margin:0 0 6px">勾選只會記在你自己的手機上。</p>
+        <p class="muted" id="todo-hint" style="margin:0 0 6px"></p>
         <ul class="todo" id="todo-list"></ul>
+        <form class="todo-add" id="todo-add" hidden autocomplete="off">
+          <input name="task" maxlength="100" placeholder="新增待辦事項…" required aria-label="待辦事項">
+          <div class="row">
+            <input name="who" maxlength="40" placeholder="負責人（選填）" aria-label="負責人">
+            <input name="due" maxlength="20" placeholder="期限（選填）" aria-label="期限">
+          </div>
+          <button class="btn primary" type="submit">新增</button>
+        </form>
+        <div class="todo-foot" id="todo-foot"></div>
       </div>
       <div class="card" id="pass-card"></div>
     </div>
@@ -702,6 +725,10 @@ const TRIP = {
     { h: "🗣️ Papago 翻譯", p: "看菜單拍照翻譯很好用，韓文比英文好溝通。" },
   ],
 
+  // 共用待辦：貼上 Apps Script 部署後的網址（…/exec）。留空＝使用下面的 todos，勾選只存在自己的手機
+  todoApi: "https://script.google.com/macros/s/AKfycby0V1SLZ50o7EscPcOwbc7S38wpL6R6H7IP9bVzaaqQC4QjVfYfJGn6LrGPxm30MzVvzg/exec",
+  sheetUrl: "https://docs.google.com/spreadsheets/d/1l8xYlL7ymIekqoJcRI57oZgaT23xzh3Qe-AA4FN2yS8/edit",
+
   todos: [
     { id: "pass",   task: "釜山 Pass 購買（Klook）", who: "語心・筱婕・柔臻", status: "已購買", done: true },
     { id: "cruise", task: "鑽石灣遊艇預約（一個月前）", who: "語心", status: "待預約", due: "約 10/15 前" },
@@ -851,13 +878,20 @@ function backHTML(d){
   const b = d.back;
   if (!b) return `<div class="stayline">${icon(d.stay ? "bed" : "home")}今晚住宿：${d.stay ? esc(d.stay) : "回台灣，晚安"}</div>`;
   const dir = "https://www.google.com/maps/dir/?api=1&destination=" + encodeURIComponent(b.dest.q);
-  return `<div class="back">
-    <h4 class="dt-head">${icon("home")}${esc(b.title)}</h4>
+  const MODE = { "🚶":"走路", "🚇":"地鐵", "🚕":"計程車", "🚌":"公車" };
+  const summary = b.routes.map(o => { const t = (o.h.match(/約\s?[\d–-]+\s?分鐘/) || [""])[0]; return t ? `${MODE[o.ic] || ""}${t}` : ""; }).filter(Boolean).join("・");
+  return `<details class="back">
+    <summary class="dt-sum">
+      <span class="dt-head">${icon("home")}${esc(b.title)}</span>
+      <span class="dt-routes">${esc(summary)}</span>
+    </summary>
+    <div class="back-body">
     ${b.routes.map(o => `<div class="opt"><span class="oi">${icon(EMOJI_ICON[o.ic] || "map")}</span><div><b>${esc(o.h)}</b><br>${esc(o.p)}</div></div>`).join("")}
     ${b.note ? `<div class="note muted">${icon("bulb")}<span>${esc(b.note)}</span></div>` : ""}
     <div class="place"><a class="mbtn g" href="${esc(dir)}" ${ext}>${icon("pin")}Google 導航回住宿</a><a class="mbtn n" href="${esc(nUrl(b.dest))}" ${ext}>${icon("map")}Naver</a></div>
     <p class="dt-foot">步行時間依直線距離估算，實際以地圖為準。</p>
-  </div>`;
+    </div>
+  </details>`;
 }
 
 function dayTransport(d){
@@ -883,20 +917,72 @@ function renderTips(){
     return `<div class="tip"><span class="oi">${icon(ic)}</span><div><b>${esc(h)}</b><p>${esc(t.p)}</p></div></div>`; }).join("");
 }
 
-function renderTodo(){
-  const saved = store.get("busan-todo") || {};
-  const cls = s => /已/.test(s) ? "ok" : /待確認/.test(s) ? "tbd" : /各自/.test(s) ? "info" : "warn";
-  $("#todo-list").innerHTML = TRIP.todos.map(t => {
-    const done = saved[t.id] ?? !!t.done;
-    return `<li class="${done?"done":""}"><input type="checkbox" data-id="${t.id}" ${done?"checked":""} aria-label="${esc(t.task)}">
+const todoCls = t => t.done ? "ok" : /已/.test(t.status) ? "ok" : /待確認/.test(t.status) ? "tbd" : /各自/.test(t.status) ? "info" : "warn";
+const todoItem = t => `<li class="${t.done ? "done" : ""}"><input type="checkbox" data-id="${esc(t.id)}" ${t.done ? "checked" : ""} aria-label="${esc(t.task)}">
       <div class="t"><span>${esc(t.task)}</span><small>${t.who ? icon("user") + esc(t.who) : ""}${t.due ? " " + icon("clock") + esc(t.due) : ""}</small></div>
-      <span class="tag ${cls(t.status)}">${esc(t.status)}</span></li>`;
-  }).join("");
-  $("#todo-list").addEventListener("change", e => {
+      <span class="tag ${todoCls(t)}">${esc(t.done && !/已/.test(t.status) ? "完成" : t.status)}</span></li>`;
+
+// 本機模式：勾選只存在自己的手機
+function renderLocalTodo(){
+  const saved = store.get("busan-todo") || {};
+  $("#todo-hint").textContent = "勾選只會記在你自己的手機上。";
+  $("#todo-list").innerHTML = TRIP.todos.map(t => todoItem({ ...t, done: saved[t.id] ?? !!t.done })).join("");
+  $("#todo-list").onchange = e => {
     const id = e.target.dataset.id; if (!id) return;
     const s = store.get("busan-todo") || {}; s[id] = e.target.checked; store.set("busan-todo", s);
     e.target.closest("li").classList.toggle("done", e.target.checked);
-  });
+  };
+}
+
+// 共用模式：資料存在試算表「待辦」分頁（Apps Script）
+const shared = { todos: null, busy: false };
+async function todoCall(body){
+  const res = body
+    ? await fetch(TRIP.todoApi, { method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" }, body: JSON.stringify(body) })
+    : await fetch(TRIP.todoApi, { cache: "no-store" });
+  const data = await res.json();
+  if (!data.ok) throw new Error(data.error || "發生錯誤");
+  shared.todos = data.todos; store.set("busan-todo-shared", data.todos);
+  return data.todos;
+}
+function paintShared(msg){
+  const list = shared.todos || [];
+  $("#todo-list").innerHTML = list.length ? list.map(todoItem).join("") : `<li class="muted">還沒有待辦事項</li>`;
+  $("#todo-foot").innerHTML = `${msg ? `<span>${esc(msg)}</span>` : ""}<button type="button" id="todo-refresh">重新整理</button><a href="${esc(TRIP.sheetUrl)}" ${ext}>到試算表修改／刪除</a>`;
+  $("#todo-refresh").onclick = () => loadShared();
+}
+async function loadShared(){
+  paintShared("讀取中…");
+  try { await todoCall(); paintShared(""); }
+  catch (err) { paintShared(shared.todos ? "無法連線，顯示上次的資料" : "無法讀取待辦：" + err.message); }
+}
+function renderSharedTodo(){
+  $("#todo-hint").textContent = "大家共用同一份清單，新增和勾選所有人都看得到。";
+  shared.todos = store.get("busan-todo-shared");
+  $("#todo-add").hidden = false;
+  $("#todo-list").onchange = async e => {
+    const id = e.target.dataset.id; if (!id) return;
+    const li = e.target.closest("li"), done = e.target.checked;
+    li.classList.toggle("done", done); li.classList.add("pending");
+    try { await todoCall({ action: "toggle", id, done }); paintShared(""); }
+    catch (err) { e.target.checked = !done; li.classList.toggle("done", !done); li.classList.remove("pending"); toast("更新失敗：" + err.message); }
+  };
+  $("#todo-add").onsubmit = async e => {
+    e.preventDefault();
+    const f = e.target, btn = f.querySelector("button");
+    const body = { action: "add", task: f.task.value.trim(), who: f.who.value.trim(), due: f.due.value.trim() };
+    if (!body.task) return;
+    btn.disabled = true; btn.textContent = "新增中…";
+    try { await todoCall(body); f.reset(); paintShared(""); toast("已新增"); }
+    catch (err) { toast("新增失敗：" + err.message); }
+    finally { btn.disabled = false; btn.textContent = "新增"; }
+  };
+  document.addEventListener("visibilitychange", () => { if (document.visibilityState === "visible") loadShared(); });
+  loadShared();
+}
+
+function renderTodo(){
+  if (TRIP.todoApi) renderSharedTodo(); else renderLocalTodo();
   const p = TRIP.pass;
   $("#pass-card").innerHTML = `<h3 class="ch">${icon("ticket")}釜山 Pass</h3>
     <p class="muted" style="margin:0">使用者：<b style="color:var(--ink)">${esc(p.users)}</b></p>
