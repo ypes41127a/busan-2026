@@ -247,9 +247,21 @@ section.block{padding:18px 0 8px}
 .food .fd{font-size:13px;color:var(--ink-2)}
 
 /* ---------- transport（在每日行程內） ---------- */
-.day-transport{margin:4px 0 14px;padding-top:14px;border-top:1px dashed var(--line)}
-.dt-head{display:flex;align-items:center;gap:8px;margin:0 0 10px;font-size:15px;color:var(--ink-blue);letter-spacing:.1em}
+.day-transport{margin:4px 0 14px;border-radius:16px;background:color-mix(in srgb,var(--sky-100) 72%,transparent);border:1px solid color-mix(in srgb,var(--sky-200) 60%,transparent)}
+.day-transport > summary{list-style:none;cursor:pointer;padding:12px 14px;display:flex;flex-wrap:wrap;align-items:center;gap:2px 10px;position:relative;padding-right:36px}
+.day-transport > summary::-webkit-details-marker{display:none}
+.day-transport > summary::after{content:"";position:absolute;right:16px;top:18px;width:8px;height:8px;border-right:2px solid var(--sea-500);border-bottom:2px solid var(--sea-500);transform:rotate(45deg);transition:transform .2s}
+.day-transport[open] > summary::after{transform:rotate(-135deg);top:22px}
+.dt-head{display:flex;align-items:center;gap:8px;margin:0;font-size:15px;font-weight:700;color:var(--ink-blue);letter-spacing:.1em}
 .dt-head .ic{color:var(--sea-500);width:18px;height:18px}
+.dt-routes{flex-basis:100%;font-size:12.5px;color:var(--ink-2)}
+.day-transport[open] .dt-routes{display:none}
+.day-transport .tr{margin:0 10px 10px;padding:10px 12px 4px;border-radius:14px;background:var(--card-strong)}
+.day-transport .tr.hl{box-shadow:inset 0 0 0 2px var(--peach)}
+.tr-title{font-weight:700;color:var(--navy);display:flex;align-items:center;gap:8px;margin-bottom:2px}
+.tr-title .when{font-size:12px;color:var(--ink-2);font-weight:500;white-space:nowrap}
+.day-transport .dt-foot{margin:0 14px 12px}
+.back .dt-head{margin-bottom:8px}
 .dt-foot{margin:4px 2px 0;font-size:12px;color:var(--ink-2)}
 .back{margin-top:6px;padding:14px 14px 10px;border-radius:16px;background:color-mix(in srgb,var(--mint-soft) 75%,transparent);border:1px solid color-mix(in srgb,var(--mint) 45%,transparent)}
 .back .dt-head{color:var(--mint-ink)}.back .dt-head .ic{color:var(--mint-ink)}
@@ -605,44 +617,44 @@ const TRIP = {
   // 美食：src "sheet"＝試算表，"sup"＝推薦補充
   food: [
     { area: "廣安里", ko: "광안리", items: [
-      { src: "sheet", name: "Mipojip 廣安里店（醬蟹）", ko: "미포집 광안리점", g: "https://maps.app.goo.gl/h6nMf9NmqkVkNMPD7", d: "11/15 午餐" },
-      { src: "sheet", name: "彥陽家燒肉", ko: "언양불고기 부산집", g: "https://maps.app.goo.gl/dBArpN7bBJQk9Erg9", d: "11/15 晚餐" },
+      { src: "sheet", name: "Mipojip 廣安里店（醬蟹）", ko: "미포집 광안리점", g: "https://maps.app.goo.gl/h6nMf9NmqkVkNMPD7", d: "11/15 午餐・醬油醃生螃蟹（간장게장），蟹膏拌白飯是經典吃法" },
+      { src: "sheet", name: "彥陽家燒肉", ko: "언양불고기 부산집", g: "https://maps.app.goo.gl/dBArpN7bBJQk9Erg9", d: "11/15 晚餐・蔚山彥陽式烤牛肉（언양불고기），剁碎調味的薄片牛肉烤得香甜" },
       { src: "sup", name: "民樂水產市場（生魚片）", ko: "민락회센터", d: "廣安里海邊，買好海鮮上樓代煮／切生魚片" },
       { src: "sup", name: "Working Holiday 廣安店（早午餐咖啡）", ko: "워킹홀리데이 광안", d: "廣安里海灘正前方 3 樓，看得到廣安大橋；招牌是冰淇淋拿鐵" },
     ]},
     { area: "海雲台", ko: "해운대", items: [
-      { src: "sheet", name: "31cm 海鮮刀削麵 海雲台店", ko: "해운대31cm해물칼국수", g: "https://maps.app.goo.gl/jrf7xkHjv9BPfgoa8", d: "11/16 午餐" },
-      { src: "sheet", name: "Puradak 炸雞", ko: "푸라닭", g: "https://maps.app.goo.gl/aRNyesJA3WJWwZm68", d: "11/15 晚餐" },
-      { src: "sheet", name: "水邊最高豬肉湯飯", ko: "수변최고돼지국밥", g: "https://maps.app.goo.gl/n2PYBy6Qp1gm98E87", d: "11/16 晚餐・釜山代表性豬肉湯飯" },
+      { src: "sheet", name: "31cm 海鮮刀削麵 海雲台店", ko: "해운대31cm해물칼국수", g: "https://maps.app.goo.gl/jrf7xkHjv9BPfgoa8", d: "11/16 午餐・海鮮堆得像小山的大碗刀削麵，份量大適合分著吃" },
+      { src: "sheet", name: "Puradak 炸雞", ko: "푸라닭", g: "https://maps.app.goo.gl/aRNyesJA3WJWwZm68", d: "11/15 晚餐・韓國連鎖炸雞，醬料口味多，招牌是黑蒜醬油的「블랙알리오」" },
+      { src: "sheet", name: "水邊最高豬肉湯飯", ko: "수변최고돼지국밥", g: "https://maps.app.goo.gl/n2PYBy6Qp1gm98E87", d: "11/16 晚餐・釜山代表性的豬肉湯飯（돼지국밥），可加韭菜、蝦醬自己調味" },
       { src: "sup", name: "錦繡河豚湯 海雲台本店", ko: "금수복국 해운대본점", d: "清爽河豚湯，適合當早餐" },
       { src: "sup", name: "海雲台元祖奶奶湯飯", ko: "해운대 원조할매국밥", d: "海雲台市場附近的牛肉湯飯老店" },
       { src: "sup", name: "名品海雲台蔘雞湯", ko: "명품해운대삼계탕", g: "https://maps.app.goo.gl/C2fri2oGV15xGoZg6", d: "暖呼呼的蔘雞湯，11 月天涼很適合" },
       { src: "sup", name: "自然島鹽麵包", ko: "자연도소금빵 해운대", d: "迎月路上的鹽麵包名店，離天空膠囊列車尾浦站不遠" },
     ]},
     { area: "松島", ko: "송도", items: [
-      { src: "sheet", name: "송도해솥（海鮮定食）", ko: "송도해솥", g: "https://maps.app.goo.gl/X4zWvuD2wRvzjKUd8", d: "11/17 午餐" },
-      { src: "sheet", name: "바닷속 조개왕국（烤貝）", ko: "바닷속 조개왕국", g: "https://maps.app.goo.gl/a7hoYh3NxXZoQmLd9", d: "11/17 午餐" },
-      { src: "sheet", name: "岩南公園停車場海鮮攤", ko: "암남공원 해산물", d: "整排海鮮攤隨便找一家" },
+      { src: "sheet", name: "송도해솥（海鮮定食）", ko: "송도해솥", g: "https://maps.app.goo.gl/X4zWvuD2wRvzjKUd8", d: "11/17 午餐・松島海邊的海鮮定食，逛完纜車和天空步道就近用餐" },
+      { src: "sheet", name: "바닷속 조개왕국（烤貝）", ko: "바닷속 조개왕국", g: "https://maps.app.goo.gl/a7hoYh3NxXZoQmLd9", d: "11/17 午餐・炭火現烤各種貝類（조개구이），常搭配起司一起烤" },
+      { src: "sheet", name: "岩南公園停車場海鮮攤", ko: "암남공원 해산물", d: "11/17 午餐・一整排帳篷海鮮攤，現撈海鮮可生吃或請店家料理，隨便挑一家" },
     ]},
     { area: "甘川洞", ko: "감천", items: [
-      { src: "sheet", name: "甘川洞文化村沿路小吃", ko: "감천문화마을", d: "11/18 下午邊走邊吃" },
+      { src: "sheet", name: "甘川洞文化村沿路小吃", ko: "감천문화마을", d: "11/18 下午・村裡邊走邊吃的小攤，逛累了隨手買來吃" },
       { src: "sup", name: "Blue House on The Stairs（屋頂咖啡）", ko: "계단위푸른집", d: "甘川洞文化村裡的屋頂咖啡廳，招牌是棉花糖雲朵拿鐵；約 10:00–18:00" },
       { src: "sup", name: "Coffee It House（屋頂咖啡）", ko: "커피잇집", d: "村口的粉紅色建築，屋頂可看整片彩色房子，招牌草莓拿鐵；約 9:30–18:30" },
       { src: "sup", name: "富平罐頭夜市", ko: "부평깡통시장", d: "甘川洞回南浦順路，傍晚後有夜市攤（營業時間出發前確認）" },
     ]},
     { area: "南浦洞", ko: "남포", items: [
-      { src: "sheet", name: "南浦雪濃湯", ko: "남포설렁탕", g: "https://maps.app.goo.gl/5g2Z4EEwgYwQYAxG8", d: "11/17 宵夜" },
-      { src: "sheet", name: "Namsun 炸雞", ko: "남선치킨", g: "https://maps.app.goo.gl/UUyPSgzSugq3DVfp7", d: "11/17 宵夜" },
-      { src: "sheet", name: "BHC 炸雞", ko: "BHC 남포", d: "11/17 宵夜備案（分店待確認）" },
-      { src: "sheet", name: "南浦排骨烤肉", ko: "남포돈갈비", g: "https://maps.app.goo.gl/ybpW9YbX7YhHiCwF9", d: "11/18 晚餐" },
-      { src: "sheet", name: "豚笑 南浦店（豬排）", ko: "톤쇼우 남포점", g: "https://maps.app.goo.gl/f5mySCZk8qivPvDh7", d: "11/18 晚餐" },
-      { src: "sheet", name: "Cuv Share（早午餐）", ko: "커브쉐어", g: "https://maps.app.goo.gl/xhKHLr2JoMR31oSr5", d: "11/19 早午餐" },
+      { src: "sheet", name: "南浦雪濃湯", ko: "남포설렁탕", g: "https://maps.app.goo.gl/5g2Z4EEwgYwQYAxG8", d: "11/17 宵夜・牛骨熬成的乳白色湯頭（설렁탕），加鹽和蔥自己調味，暖胃" },
+      { src: "sheet", name: "Namsun 炸雞", ko: "남선치킨", g: "https://maps.app.goo.gl/UUyPSgzSugq3DVfp7", d: "11/17 宵夜・南浦洞的炸雞店，宵夜配啤酒（치맥）最對味" },
+      { src: "sheet", name: "BHC 炸雞", ko: "BHC 남포", d: "11/17 宵夜備案・韓國連鎖炸雞，招牌是撒起司粉的「뿌링클」（分店待確認）" },
+      { src: "sheet", name: "南浦排骨烤肉", ko: "남포돈갈비", g: "https://maps.app.goo.gl/ybpW9YbX7YhHiCwF9", d: "11/18 晚餐・調味豬排骨（돼지갈비）烤肉，甜鹹醬汁很下飯" },
+      { src: "sheet", name: "豚笑 南浦店（豬排）", ko: "톤쇼우 남포점", g: "https://maps.app.goo.gl/f5mySCZk8qivPvDh7", d: "11/18 晚餐・日式炸豬排，厚切多汁" },
+      { src: "sheet", name: "Cuv Share（早午餐）", ko: "커브쉐어", g: "https://maps.app.goo.gl/xhKHLr2JoMR31oSr5", d: "11/19 早午餐・南浦洞的早午餐咖啡廳，最後一天收完行李慢慢吃" },
       { src: "sup", name: "BIFF 廣場 種子糖餅", ko: "씨앗호떡", d: "BIFF 廣場排隊街頭小吃" },
       { src: "sup", name: "18 號完堂（餛飩麵）", ko: "18번완당", d: "南浦洞老字號餛飩" },
     ]},
     { area: "影島", ko: "영도", items: [
-      { src: "sheet", name: "影島海女村（海鮮）", ko: "영도 해녀촌", g: "https://maps.app.goo.gl/9TpXToNYfhTWADCQ8", d: "11/19 下午" },
-      { src: "sheet", name: "Footbath Cafe View（足浴咖啡）", ko: "족욕카페 뷰", g: "https://maps.app.goo.gl/WLQ6jFGZa32hLMf5A", d: "11/19 下午" },
+      { src: "sheet", name: "影島海女村（海鮮）", ko: "영도 해녀촌", g: "https://maps.app.goo.gl/9TpXToNYfhTWADCQ8", d: "11/19 下午・海女現撈的海鮮，在海邊直接吃海鞘、海螺等生猛海產" },
+      { src: "sheet", name: "Footbath Cafe View（足浴咖啡）", ko: "족욕카페 뷰", g: "https://maps.app.goo.gl/WLQ6jFGZa32hLMf5A", d: "11/19 下午・一邊泡腳一邊喝咖啡看海，回台前放鬆一下" },
       { src: "sup", name: "三進魚糕 影島本店", ko: "삼진어묵 영도본점", d: "釜山魚糕名店，可買伴手禮" },
     ]},
   ],
@@ -851,18 +863,19 @@ function backHTML(d){
 function dayTransport(d){
   const list = TRIP.transport.filter(t => t.when.startsWith(d.date));
   if (!list.length) return "";
-  return `<div class="day-transport">
-    <h4 class="dt-head">${icon("subway")}今日交通</h4>
-    ${list.map((t,i) => `
-    <details class="tr ${t.hl ? "hl" : ""}" ${t.hl || i===0 ? "open" : ""}>
-      <summary>${esc(t.t)} <span class="when">${esc(t.when.replace(d.date, "").trim())}</span></summary>
-      <div class="body">
-        ${t.opts.map(o => `<div class="opt"><span class="oi">${icon(EMOJI_ICON[o.ic] || "map")}</span><div><b>${esc(o.h)}</b><br>${esc(o.p)}</div></div>`).join("")}
-        ${t.note ? `<div class="note muted">${icon("bulb")}<span>${esc(t.note)}</span></div>` : ""}
-      </div>
-    </details>`).join("")}
+  return `<details class="day-transport">
+    <summary class="dt-sum">
+      <span class="dt-head">${icon("subway")}今日交通</span>
+      <span class="dt-routes">${list.map(t => esc(t.t)).join("・")}</span>
+    </summary>
+    ${list.map(t => `
+    <div class="tr ${t.hl ? "hl" : ""}">
+      <div class="tr-title">${esc(t.t)} <span class="when">${esc(t.when.replace(d.date, "").trim())}</span></div>
+      ${t.opts.map(o => `<div class="opt"><span class="oi">${icon(EMOJI_ICON[o.ic] || "map")}</span><div><b>${esc(o.h)}</b><br>${esc(o.p)}</div></div>`).join("")}
+      ${t.note ? `<div class="note muted">${icon("bulb")}<span>${esc(t.note)}</span></div>` : ""}
+    </div>`).join("")}
     <p class="dt-foot">時間與車資皆為大約值，實際以 Naver Map / Kakao T 當下查詢為準。</p>
-  </div>`;
+  </details>`;
 }
 
 function renderTips(){
