@@ -471,7 +471,7 @@ footer .kr{display:block;margin-bottom:10px}
 <script>
 /* =====================================================================
  *  ✏️ 行程資料：之後要修改內容，改這個 TRIP 物件就好
- *  - place 格式：{ name: "顯示名稱", ko: "韓文名(給 Naver 搜尋用，可省略)", g: "Google Maps 連結(可省略，省略就用名稱搜尋)" }
+ *  - place 格式：{ name: "顯示名稱", ko: "韓文名(給 Naver 搜尋用，可省略)", g: "Google Maps 連結(可省略，省略就用名稱搜尋)", naver: "指定 Naver 搜尋字(可省略)" }
  *  - tags 可用：pass(釜山Pass) ok(已完成) warn(待辦) info(資訊) tbd(待確認) sup(推薦補充)
  *  - 沒資料的欄位請填 TBD，畫面會顯示「待確認」
  *  - days[].back：每天最後一個行程結束後回住宿的方式（dest 是導航目的地）
@@ -500,8 +500,8 @@ const TRIP = {
   stays: [
     { when: "11/15 – 11/17・兩晚", area: "廣安里海灘附近", name: "Kerencia（Airbnb）",
       desc: "2 張雙人床・廣安大橋海景露臺・30 秒到海邊・702 號有淨水器，可泡韓江拉麵",
-      address: "Kerencia Building, 22, Namcheonbada-ro 33beon-gil, Suyeong-gu, Busan",
-      ko: "부산 수영구 남천바다로33번길 22",
+      address: "22, Namcheonbada-ro 33beon-gil, Suyeong-gu, Busan",
+      ko: "부산 수영구 남천바다로33번길 22", naver: "22, Namcheonbada-ro 33beon-gil, Suyeong-gu, Busan",
       g: null,
       checkin: "15:00", checkout: "11:00",
       luggage: "需提前聯絡房東，3 樓櫃檯協助寄存（營業 9:00–16:00）",
@@ -522,7 +522,7 @@ const TRIP = {
 
   days: [
     { date: "11/15", dow: "日", iso: "2026-11-15", title: "抵達釜山・廣安里", ko: "광안리", stay: "廣安里 Kerencia",
-      back: { title: "回住宿：廣安里 Kerencia", dest: { q: "22 Namcheonbada-ro 33beon-gil, Suyeong-gu, Busan", ko: "부산 수영구 남천바다로33번길 22" }, routes: [
+      back: { title: "回住宿：廣安里 Kerencia", dest: { q: "22, Namcheonbada-ro 33beon-gil, Suyeong-gu, Busan", naver: "22, Namcheonbada-ro 33beon-gil, Suyeong-gu, Busan" }, routes: [
         { ic: "🚶", h: "彥陽家燒肉 → 住宿：走路約 10 分鐘", p: "兩邊都在廣安里海灘旁，距離約 700 公尺。" },
         { ic: "🚇", h: "Puradak 炸雞 → 住宿：地鐵約 25 分鐘", p: "Puradak 在海雲台（離住宿約 5 公里）。海雲台站搭 2 號線往「양산 梁山」方向 → 金蓮山站（7 站，約 15 分鐘），出站走路約 8 分鐘。" },
         { ic: "🚕", h: "或計程車：約 15 分鐘", p: "從海雲台走廣安大橋或水營路回廣安里。" } ] },
@@ -530,7 +530,7 @@ const TRIP = {
         { slot: "早上", icon: "🌅", items: [
           { time: "06:00", what: "華航 CI109 起飛 → 09:10 抵達金海機場" },
           { what: "前往廣安里住宿放行李", note: "入住 15:00；提早到要寄放行李，需先聯絡房東（3 樓櫃檯 9:00–16:00）",
-            places: [{ name: "Kerencia 住宿", ko: "부산 수영구 남천바다로33번길 22", q: "22 Namcheonbada-ro 33beon-gil Suyeong-gu Busan" }] },
+            places: [{ name: "Kerencia 住宿", q: "22, Namcheonbada-ro 33beon-gil, Suyeong-gu, Busan", naver: "22, Namcheonbada-ro 33beon-gil, Suyeong-gu, Busan" }] },
         ]},
         { slot: "下午", icon: "☀️", items: [
           { what: "午餐：醬蟹", places: [{ name: "Mipojip 廣安里店", ko: "미포집 광안리점", g: "https://maps.app.goo.gl/h6nMf9NmqkVkNMPD7" }] },
@@ -545,7 +545,7 @@ const TRIP = {
         ]},
       ]},
     { date: "11/16", dow: "一", iso: "2026-11-16", title: "海雲台一日", ko: "해운대", stay: "廣安里 Kerencia",
-      back: { title: "回住宿：廣安里 Kerencia", dest: { q: "22 Namcheonbada-ro 33beon-gil, Suyeong-gu, Busan", ko: "부산 수영구 남천바다로33번길 22" }, routes: [
+      back: { title: "回住宿：廣安里 Kerencia", dest: { q: "22, Namcheonbada-ro 33beon-gil, Suyeong-gu, Busan", naver: "22, Namcheonbada-ro 33beon-gil, Suyeong-gu, Busan" }, routes: [
         { ic: "🚇", h: "SPA LAND → 住宿：地鐵約 20 分鐘", p: "新世界百貨地下直通 Centum City 站，搭 2 號線往「양산 梁山」方向 → 金蓮山站（4 站，約 8 分鐘），出站走路約 8 分鐘。" },
         { ic: "🚕", h: "或計程車：約 10 分鐘", p: "距離約 3 公里，汗蒸完累了最方便。" } ],
         note: "汗蒸幕待到很晚的話，出發前用 Naver Map 確認地鐵末班車時間，錯過就搭計程車。" },
@@ -751,8 +751,8 @@ const TRIP = {
 const $ = s => document.querySelector(s);
 const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]));
 const orTBD = v => v == null || v === "" ? '<span class="tag tbd">待確認</span>' : esc(v);
-const gUrl = p => p.g || "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent((p.q || p.ko || p.name) + " Busan");
-const nUrl = p => "https://map.naver.com/p/search/" + encodeURIComponent(p.ko || p.q || p.name);
+const gUrl = p => { if (p.g) return p.g; const q = p.q || p.ko || p.name; return "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(/busan|부산/i.test(q) ? q : q + " Busan"); };
+const nUrl = p => "https://map.naver.com/p/search/" + encodeURIComponent(p.naver || p.ko || p.q || p.name);
 const ext = 'target="_blank" rel="noopener"';
 const nt = n => "NT$" + n.toLocaleString("en-US");
 const icon = id => `<svg class="ic" aria-hidden="true"><use href="#i-${id}"/></svg>`;
