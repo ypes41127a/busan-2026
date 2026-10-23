@@ -537,8 +537,8 @@ const TRIP = {
           { what: "逛逛選物店＋廣安里海灘", places: [{ name: "廣安里海水浴場", ko: "광안리해수욕장" }] },
         ]},
         { slot: "晚上", icon: "🌙", items: [
-          { what: "鑽石灣遊艇", tags: [["pass","釜山 Pass"],["warn","一個月前預約・語心"]], note: "上船時間與碼頭待確認",
-            places: [{ name: "Diamond Bay 遊艇", ko: "다이아몬드베이" }] },
+          { what: "鑽石灣遊艇", tags: [["pass","釜山 Pass"],["warn","一個月前預約・語心"]], note: "碼頭在南區龍湖灣（분포로 101），上船時間待確認",
+            places: [{ name: "Diamond Bay 遊艇", ko: "삼주다이아몬드베이", naver: "부산 남구 분포로 101" }] },
           { what: "晚餐：彥陽家燒肉、Puradak 炸雞", places: [
             { name: "彥陽家燒肉", ko: "언양불고기 부산집", g: "https://maps.app.goo.gl/dBArpN7bBJQk9Erg9" },
             { name: "Puradak 炸雞", ko: "푸라닭", g: "https://maps.app.goo.gl/aRNyesJA3WJWwZm68" } ] },
@@ -570,8 +570,8 @@ const TRIP = {
     { date: "11/17", dow: "二", iso: "2026-11-17", title: "松島・搬到南浦洞", ko: "송도", stay: "南浦 Paramion Hotel",
       back: { title: "回住宿：南浦 Paramion Hotel", dest: { q: "20 BIFF gwangjang-ro, Jung-gu, Busan", ko: "파라미온 호텔 부산" }, routes: [
         { ic: "🚶", h: "南浦雪濃湯 → 飯店：走路約 7 分鐘", p: "約 500 公尺，就在 BIFF 廣場附近。" },
-        { ic: "🚶", h: "Namsun 炸雞 → 飯店：走路約 15 分鐘", p: "約 1 公里；累了可搭計程車，約 5 分鐘。" } ],
-        note: "BHC 炸雞分店還沒決定，選好再用地圖查回飯店的路。" },
+        { ic: "🚶", h: "Namsun 炸雞 → 飯店：走路約 15 分鐘", p: "約 1 公里；累了可搭計程車，約 5 分鐘。" },
+        { ic: "🚶", h: "BHC 南浦店 → 飯店：走路約 3 分鐘", p: "就在 BIFF 廣場上，和飯店同一條路（비프광장로）。" } ] },
       slots: [
         { slot: "早上", icon: "🌅", items: [
           { time: "11:00", what: "廣安里退房，搬去南浦洞", note: "Paramion 前台可寄放行李，交通方式見「交通建議」" },
@@ -591,7 +591,7 @@ const TRIP = {
           { what: "宵夜：南浦雪濃湯、Namsun 炸雞或 BHC 炸雞", places: [
             { name: "南浦雪濃湯", ko: "남포설렁탕", g: "https://maps.app.goo.gl/5g2Z4EEwgYwQYAxG8" },
             { name: "Namsun 炸雞", ko: "남선치킨", g: "https://maps.app.goo.gl/UUyPSgzSugq3DVfp7" },
-            { name: "BHC 炸雞（南浦附近）", ko: "BHC 남포" } ] },
+            { name: "BHC 炸雞 南浦店", ko: "BHC치킨 남포점", naver: "부산 중구 비프광장로 31-1" } ] },
         ]},
       ]},
     { date: "11/18", dow: "三", iso: "2026-11-18", title: "甘川洞・南浦洞", ko: "감천", stay: "南浦 Paramion Hotel",
@@ -651,7 +651,7 @@ const TRIP = {
       { src: "sheet", name: "水邊最高豬肉湯飯", ko: "수변최고돼지국밥", g: "https://maps.app.goo.gl/n2PYBy6Qp1gm98E87", d: "11/16 晚餐・釜山代表性的豬肉湯飯（돼지국밥），可加韭菜、蝦醬自己調味" },
       { src: "sup", name: "錦繡河豚湯 海雲台本店", ko: "금수복국 해운대본점", d: "清爽河豚湯，適合當早餐" },
       { src: "sup", name: "海雲台元祖奶奶湯飯", ko: "해운대 원조할매국밥", d: "海雲台市場附近的牛肉湯飯老店" },
-      { src: "sup", name: "名品海雲台蔘雞湯", ko: "명품해운대삼계탕", g: "https://maps.app.goo.gl/C2fri2oGV15xGoZg6", d: "暖呼呼的蔘雞湯，11 月天涼很適合" },
+      { src: "sup", name: "名品海雲台蔘雞湯", ko: "해운대소문난삼계탕", naver: "부산 해운대구 중동2로 6", g: "https://maps.app.goo.gl/C2fri2oGV15xGoZg6", d: "暖呼呼的蔘雞湯，11 月天涼很適合" },
       { src: "sup", name: "自然島鹽麵包", ko: "자연도소금빵&자연도해", d: "迎月路上的鹽麵包名店，離天空膠囊列車尾浦站不遠" },
     ]},
     { area: "松島", ko: "송도", items: [
@@ -668,7 +668,7 @@ const TRIP = {
     { area: "南浦洞", ko: "남포", items: [
       { src: "sheet", name: "南浦雪濃湯", ko: "남포설렁탕", g: "https://maps.app.goo.gl/5g2Z4EEwgYwQYAxG8", d: "11/17 宵夜・牛骨熬成的乳白色湯頭（설렁탕），加鹽和蔥自己調味，暖胃" },
       { src: "sheet", name: "Namsun 炸雞", ko: "남선치킨", g: "https://maps.app.goo.gl/UUyPSgzSugq3DVfp7", d: "11/17 宵夜・南浦洞的炸雞店，宵夜配啤酒（치맥）最對味" },
-      { src: "sheet", name: "BHC 炸雞", ko: "BHC 남포", d: "11/17 宵夜備案・韓國連鎖炸雞，招牌是撒起司粉的「뿌링클」（分店待確認）" },
+      { src: "sheet", name: "BHC 炸雞 南浦店", ko: "BHC치킨 남포점", naver: "부산 중구 비프광장로 31-1", d: "11/17 宵夜備案・韓國連鎖炸雞，招牌是撒起司粉的「뿌링클」；就在 BIFF 廣場上，營業到午夜" },
       { src: "sheet", name: "南浦排骨烤肉", ko: "남포돈갈비", g: "https://maps.app.goo.gl/ybpW9YbX7YhHiCwF9", d: "11/18 晚餐・調味豬排骨（돼지갈비）烤肉，甜鹹醬汁很下飯" },
       { src: "sheet", name: "豚笑 南浦店（豬排）", ko: "톤쇼우 남포점", g: "https://maps.app.goo.gl/f5mySCZk8qivPvDh7", d: "11/18 晚餐・日式炸豬排，厚切多汁" },
       { src: "sheet", name: "Cuv Share（早午餐）", ko: "커브쉐어", g: "https://maps.app.goo.gl/xhKHLr2JoMR31oSr5", d: "11/19 早午餐・南浦洞的早午餐咖啡廳，最後一天收完行李慢慢吃" },
