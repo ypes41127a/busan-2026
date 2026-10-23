@@ -791,7 +791,7 @@ function renderHero(){
     html = `<div class="num">${days}</div><div class="lbl"><b>天後出發 ${icon("plane")}</b>11/15 06:00 桃園起飛</div>`;
   } else if (now <= end) {
     const d = Math.floor((now - new Date("2026-11-15T00:00:00+09:00")) / 864e5) + 1;
-    html = `<div class="num">D${d}</div><div class="lbl"><b>旅行第 ${d} 天</b>今天的行程在下方</div>`;
+    html = `<div class="num">D${d}</div><div class="lbl"><b>旅行第 ${d} 天</b><a href="#days">看今天的行程 →</a></div>`;
   } else {
     html = `<div class="num">${icon("home")}</div><div class="lbl"><b>旅程結束</b>또 만나요, 부산!</div>`;
   }
@@ -869,6 +869,9 @@ function renderDays(){
   };
   $("#day-tabs").addEventListener("click", e => { const b = e.target.closest(".tab"); if (b) show(+b.dataset.i); });
   show(active);
+  // 打開網頁時把當天的分頁捲到畫面中間（只橫向捲動分頁列，整頁不會跳）
+  const strip = $("#day-tabs"), sel = strip.children[active];
+  strip.scrollLeft = sel.offsetLeft - (strip.clientWidth - sel.offsetWidth) / 2;
 }
 
 function renderFood(){
